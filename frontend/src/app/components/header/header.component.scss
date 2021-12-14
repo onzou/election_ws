@@ -1,0 +1,67 @@
+@import '../../../styles.scss';
+
+header  
+{
+  background-color: var(--green);
+  color: var(--white);
+  padding: 15px 20px;
+  box-shadow: 1px 1px 5px rgba(0,0,0,0.4);
+  margin-bottom: 30px;
+  transition: 0.3s ease-out;
+  padding: 15px 100px;
+  font-size: 18px;
+  &.scrolled
+  {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+  box-shadow: 2px 2px 7px rgba(0,0,0,0.4);
+
+  }
+  nav
+  {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    text-align: center;
+    ul 
+    {
+      list-style: none;
+      display: flex;
+      li 
+      {
+        display: inline-block;
+        margin: 0 20px;
+        a 
+        {
+          text-decoration: none;
+          color: var(--white);
+          position: relative;
+          transition: 0.3s ease;
+          
+          &::before 
+          {
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            content: '';
+            height: 2px; 
+            width: 0%;
+            background-color: var(--white);
+            transition: 0.3s ease;
+            transition-delay: 0.2s;
+          }
+          &:hover
+          {
+            font-weight: 550;
+            &::before
+            {
+              width: 40%;
+            }
+          }
+        }
+      }
+    }
+  }
+}

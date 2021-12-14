@@ -1,0 +1,4 @@
+class Elector 
+{
+    constructor(){}
+}

@@ -1,0 +1,124 @@
+.welcome 
+{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  h3 
+  {
+    font-size: 25px;
+    margin-bottom: 15px;
+  }
+  .welcome_text 
+  {
+    width: 400px;
+    color: rgba(#000,0.8);
+  }
+}
+
+.main 
+{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    height: 100%;
+    margin-top: 50px;
+    margin-left: 10%;
+    margin-right: 10%;
+    gap: 50px;
+    .guide 
+    {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 30px;
+      .img_container img
+      {
+        width: 300px;
+        height: 300px;
+        border-radius: 10px;
+      }
+      .guide_text
+      {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      p 
+      {
+        max-width: 75ch;
+        color: #4c4c4c;
+      }   
+      h4
+      {
+        font-family: Source Sans Pro;
+        font-size: 28px;
+        font-weight: 500;
+        line-height: 30.8px;
+        margin: 0px 0px 12px;
+        color: rgba(var(--black),0.8);
+      }
+      .btn
+      {
+        background: none;
+        color: var(--green);
+        border: 1px solid var(--green);
+        padding: 8px 10px;
+        border-radius: 5px;
+        letter-spacing: 0.5px;
+        margin: 15px auto;
+        transform: translateX(50%, 50%);
+        cursor: pointer;
+        transition: 0.3s ease-out;
+        &:hover 
+        {
+          background-color: var(--green);
+          color: var(--white);
+        }
+      }
+    }
+      
+    }
+    .steps 
+    {
+        margin-bottom: 20px;
+        h4
+        {
+            display: block;
+            text-align: center;
+            margin: 10px auto;
+            font-size: 24px;
+        } 
+
+        .container
+        {
+            display: flex;
+            width: 100%;
+            justify-content: center;
+            gap: 30px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .vote_step
+        {
+            text-align: center;
+            max-width: 200px;
+            
+            h3
+            {
+                color: var(--green);
+                font-weight: bold;
+                font-size: 20px;
+            }
+
+            img 
+            {
+                height: 150px;
+                width: 150px;
+                border-radius: 50%;
+            }
+        }
+    }
+}
