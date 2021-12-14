@@ -8,5 +8,5 @@ import org.springframework.stereotype.Repository;
 @RepositoryRestResource(collectionResourceRel = "elector",path = "elector")
 public interface ElectorRepository extends JpaRepository<Elector, Long>
 {
-
+    Elector getElectorByElectorNumber(String value);
 }
