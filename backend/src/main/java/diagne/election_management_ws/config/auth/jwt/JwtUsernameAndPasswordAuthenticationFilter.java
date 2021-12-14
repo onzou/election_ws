@@ -46,7 +46,7 @@ public class JwtUsernameAndPasswordAuthenticationFilter extends UsernamePassword
         this.jwtConfig = jwtConfig;
         this.electorService = electorService;
         this.tokenService = tokenService;
-        setFilterProcessesUrl("/user/login");
+        setFilterProcessesUrl("/elector/login");
     }
 
     @Override
