@@ -16,9 +16,6 @@ import java.util.Set;
 @Table(name = "circonscription")
 public class Circonscription
 {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
 
     @EmbeddedId
     private CirconscriptionId circonscriptionId;
