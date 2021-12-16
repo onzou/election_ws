@@ -2,7 +2,6 @@ package diagne.election_management_ws.Entities.VoteOffice;
 
 import diagne.election_management_ws.Entities.Vote.Vote;
 import diagne.election_management_ws.Entities.VotersList.VotersList;
-import diagne.election_management_ws.Model.Area;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
