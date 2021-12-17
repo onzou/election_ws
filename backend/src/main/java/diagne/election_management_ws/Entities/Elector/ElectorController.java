@@ -5,6 +5,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.net.URI;
+
 @RestController
 @RequestMapping(path = "elector")
 public class ElectorController
@@ -21,6 +23,13 @@ public class ElectorController
     {
         Elector electorLoggedIn = (Elector) electorService.loadUserByUsername(elector.getElectorNumber());
         return ResponseEntity.ok(electorLoggedIn);
+    }
+
+    @PostMapping(path = "signup")
+    public ResponseEntity<Elector> signup(Elector elector)
+    {
+        return ResponseEntity.created(URI.create("elector").normalize())
+                            .body(this.electorService.save(elector));
     }
 
 }
