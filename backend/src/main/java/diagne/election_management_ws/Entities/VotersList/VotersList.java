@@ -4,26 +4,23 @@ import diagne.election_management_ws.Entities.Elector.Elector;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
-@Entity
+@Document
 @Data
 @AllArgsConstructor @NoArgsConstructor
 public class VotersList
 {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private String id;
 
-    @Column(name = "voters_list_name")
     private String name;
 
-    @Column(name = "voters_list_identification",unique = true)
     private String identification;
 
-    @OneToMany
     private Set<Elector> electors = new HashSet<>();
 }

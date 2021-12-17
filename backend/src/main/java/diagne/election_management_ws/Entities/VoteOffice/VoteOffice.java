@@ -5,23 +5,20 @@ import diagne.election_management_ws.Entities.VotersList.VotersList;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
-@Entity
+@Document
 @Data
 @AllArgsConstructor @NoArgsConstructor
 public class VoteOffice
 {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
-
-    @OneToOne
+    private String id;
     private VotersList votersList;
 
-    @OneToMany
     private Set<Vote> votes = new HashSet<>();
 }

@@ -1,12 +1,12 @@
-package diagne.election_management_ws.Entities.Circonscription;
+package diagne.election_management_ws.Entities.Region;
 
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 import org.springframework.stereotype.Repository;
 
 @Repository
 @RepositoryRestResource(collectionResourceRel = "circonscription",path = "circonscription")
-public interface CirconscriptionRepository extends JpaRepository<Circonscription, Long>
+public interface RegionRepository extends MongoRepository<Region, String>
 {
 
 }

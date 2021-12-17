@@ -4,22 +4,18 @@ import diagne.election_management_ws.Entities.Elector.Elector;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-import javax.persistence.*;
 
-@Entity
+@Document(collection = "token")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "token")
 public class Token
 {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
-
-    @Column(name = "token_value")
+    private String id;
     private String value;
-
     private String electorNumber;
 }

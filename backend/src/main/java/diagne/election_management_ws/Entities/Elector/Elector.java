@@ -3,19 +3,18 @@ package diagne.election_management_ws.Entities.Elector;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 
-@Entity
+@Document(collection = "users")
 @Data
 @AllArgsConstructor @NoArgsConstructor
-@Table(name = "elector")
 public class Elector
 {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private String id;
 
     @NotBlank(message = "Le prénom est obligatoire")
     private String firstName;
