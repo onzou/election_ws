@@ -1,12 +1,79 @@
 <header id="header">
   
     <nav>
-      <div class="logo"><span class="logo_name">Election</span></div>
+      <div class="logo">
+        <span class="logo_name">Election</span>
+      </div>
+
       <ul>
-        <li><a href="#">some1</a></li>
-        <li><a href="#">some1</a></li>
-        <li><a href="#">some1</a></li>
-        <li><a href="#">some1</a></li>
+        <li>
+          <a href="#" class="visualize">Visualiser</a>
+        </li>
+        <li class="box voter" *ngIf="isUserLoggedIn()">
+          <a href="#" >Voter</a>
+        </li>
+        <li class="box login" *ngIf="!isUserLoggedIn()">
+          <a href="#" (click)="openModal()">Se connecter</a>
+        </li>
       </ul>
     </nav>
-  </header>
+</header>
+
+<div class="modal" [class.is-open]="isModalOpened">
+  <div class="modal-container">
+    <ng-container *ngIf="isLoginOpened; else signupTemplate">
+      <form #formLogin="ngForm" (ngSubmit)="login(formLogin.value)" >
+        <div class="modal-left">
+          <h1 class="modal-title" >Connexion</h1>
+          <div class="input-block" [class.invalid]="electorNumber.touched && electorNumber.invalid" >
+            <label for="electorNumber" class="input-label">Numéro d'électeur</label>
+            <input type="text" name="electorNumber" id="electorNumber" placeholder="Numéro d'électeur"
+            #electorNumber="ngModel" ngModel required>
+          </div>
+
+          <div class="input-block" [class.invalid]="password.touched && password.invalid">
+            <label for="password" class="input-label">Mot de passe</label>
+            <input type="password"  name="password" id="password" placeholder="Mot de passe"
+            #password="ngModel" ngModel required>
+          </div>
+          <div class="modal-buttons">
+            <button class="input-button" type="submit" [disabled]="formLogin.invalid">Se connecter</button>
+          </div>
+          <p class="sign-up" (click)="toggleSignInSignUp()" >Vous vous êtes pas encore inscrit? <a href="#">Inscrivez vous</a></p>
+        </div>
+      </form>
+      <div class="modal-right">
+        <img src="https://images.unsplash.com/photo-1512486130939-2c4f79935e4f?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=dfd2ec5a01006fd8c4d7592a381d3776&auto=format&fit=crop&w=1000&q=80" alt="">
+      </div>
+    </ng-container>
+
+    <ng-template #signupTemplate>
+      <form #formSignup="ngForm" (ngSubmit)="signup(formSignup.value)">
+        <div class="modal-left">
+          <h1 class="modal-title" >Inscription</h1>
+          <div class="input-block" [class.invalid]="cni.touched && cni.invalid">
+            <label for="cni" class="input-label">Numéro d'identité nationale</label>
+            <input type="text"  name="cni" id="cni" placeholder="Numéro d'identité nationale"
+                  #cni="ngModel" ngModel required>
+          </div>
+
+          <div class="modal-buttons">
+            <button class="input-button" type="submit" [disabled]="formSignup.invalid">S'inscire</button>
+          </div>
+          <p class="sign-up" (click)="toggleSignInSignUp()">Vous vous êtes déjà inscrit? <a href="#">Connectez vous</a></p>
+        </div>
+      </form>
+      <div class="modal-right">
+        <img style="height: 325px;" src="https://images.unsplash.com/photo-1512486130939-2c4f79935e4f?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=dfd2ec5a01006fd8c4d7592a381d3776&auto=format&fit=crop&w=1000&q=80" alt="">
+      </div>
+    </ng-template>
+    
+    
+   
+    <button class="icon-button close-button" (click)="closeModal()">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50">
+        <path d="M 25 3 C 12.86158 3 3 12.86158 3 25 C 3 37.13842 12.86158 47 25 47 C 37.13842 47 47 37.13842 47 25 C 47 12.86158 37.13842 3 25 3 z M 25 5 C 36.05754 5 45 13.94246 45 25 C 45 36.05754 36.05754 45 25 45 C 13.94246 45 5 36.05754 5 25 C 5 13.94246 13.94246 5 25 5 z M 16.990234 15.990234 A 1.0001 1.0001 0 0 0 16.292969 17.707031 L 23.585938 25 L 16.292969 32.292969 A 1.0001 1.0001 0 1 0 17.707031 33.707031 L 25 26.414062 L 32.292969 33.707031 A 1.0001 1.0001 0 1 0 33.707031 32.292969 L 26.414062 25 L 33.707031 17.707031 A 1.0001 1.0001 0 0 0 32.980469 15.990234 A 1.0001 1.0001 0 0 0 32.292969 16.292969 L 25 23.585938 L 17.707031 16.292969 A 1.0001 1.0001 0 0 0 16.990234 15.990234 z"></path>
+      </svg>
+    </button>
+  </div>
+</div>
