@@ -24,10 +24,8 @@ import java.util.stream.Collectors;
 
 public class JwtTokenVerifier extends OncePerRequestFilter
 {
-
     private final TokenService tokenService;
     private final JwtConfig jwtConfig;
-
 
     @Autowired
     public JwtTokenVerifier(JwtConfig jwtConfig,

@@ -8,6 +8,7 @@ import diagne.election_management_ws.Entities.Token.Token;
 import diagne.election_management_ws.Entities.Token.TokenService;
 import diagne.election_management_ws.Model.Exceptions.BadAuthenticationException;
 import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -29,8 +30,6 @@ import java.util.Date;
 
 public class JwtUsernameAndPasswordAuthenticationFilter extends UsernamePasswordAuthenticationFilter
 {
-    @Value("${application.jwt.secret}")
-    private String jwtSecret;
 
     private final TokenService tokenService;
 
@@ -53,7 +52,7 @@ public class JwtUsernameAndPasswordAuthenticationFilter extends UsernamePassword
     protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response,
                                               AuthenticationException failed) throws IOException, ServletException
     {
-        throw new BadAuthenticationException("Adresse email ou mot de passe incorrect");
+        throw new BadAuthenticationException("Numéro d'électeur ou mot de passe incorrect");
     }
 
     @Override
@@ -67,7 +66,7 @@ public class JwtUsernameAndPasswordAuthenticationFilter extends UsernamePassword
             InputStream inputStream = request.getInputStream();
             UsernameAndPasswordAuthenticationRequest authRequest = objectMapper.readValue(inputStream,
                                                                         UsernameAndPasswordAuthenticationRequest.class);
-            Authentication auth = new UsernamePasswordAuthenticationToken(authRequest.getUsername(),authRequest.getPassword());
+            Authentication auth = new UsernamePasswordAuthenticationToken(authRequest.getElectorNumber(),authRequest.getPassword());
             return authenticationManager.authenticate(auth);
         } catch (IOException e)
         {
@@ -85,9 +84,9 @@ public class JwtUsernameAndPasswordAuthenticationFilter extends UsernamePassword
         String userName =  ((User) authResult.getPrincipal()).getUsername();
         Elector electorRetrieved = this.electorService.getElectorByNumber(userName);
         String token = Jwts.builder()
-                .setSubject(electorRetrieved.getId().toString()) // getting id of the username ( 1 for example)
-                .claim("authorities",authResult.getAuthorities())
+                .setSubject(electorRetrieved.getId())
                 .setIssuedAt(new Date())
+                .claim("authorities",authResult.getAuthorities())
                 .setExpiration(java.sql.Date.valueOf(LocalDate.now().plusDays(jwtConfig.getExpirationDuration())))
                 .compact();
 
@@ -97,7 +96,7 @@ public class JwtUsernameAndPasswordAuthenticationFilter extends UsernamePassword
         response.addHeader("Access-Control-Expose-Headers", "UserId");
         response.addHeader("Access-Control-Allow-Headers", "Authorization, X-PINGOTHER, Origin, X-Requested-With, Content-Type, Accept, X-Custom-header, UserId");
         response.addHeader("Authorization","Bearer "+token);
-        response.addHeader("UserId",electorRetrieved.getId().toString());
+        response.addHeader("UserId",electorRetrieved.getId());
     }
 
 }

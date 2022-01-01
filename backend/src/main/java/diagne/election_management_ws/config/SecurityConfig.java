@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 
 @EnableWebSecurity
 @CrossOrigin
-@EnableGlobalMethodSecurity
+//@EnableGlobalMethodSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter
 {
     private final JwtConfig jwtConfig;
@@ -46,14 +46,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter
     {
         http
                 .csrf().disable()
-                .cors()
-                .and()
+                .cors().disable()
+//                .and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 
                 //electors
                 .and()
                 .authorizeRequests()
-                .antMatchers("/elector/")
+                .antMatchers("/elector/**")
                 .permitAll()
 
                 //vote
@@ -64,7 +64,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter
 
                 .and()
                 .addFilter(new JwtUsernameAndPasswordAuthenticationFilter(authenticationManager(), jwtConfig, electorService, tokenService))
-                .addFilterAfter(new JwtTokenVerifier(jwtConfig, tokenService),JwtUsernameAndPasswordAuthenticationFilter.class)
+//                .addFilterAfter(new JwtTokenVerifier(jwtConfig, tokenService),JwtUsernameAndPasswordAuthenticationFilter.class)
                 .authorizeRequests()
                 .anyRequest()
                 .authenticated();

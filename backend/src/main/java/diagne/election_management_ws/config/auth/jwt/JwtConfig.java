@@ -14,4 +14,5 @@ public class JwtConfig
     private String tokenPrefix;
     private String header;
     private int expirationDuration;
+    private String secret;
 }
