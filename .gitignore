@@ -67,6 +67,9 @@ frontend/*.sublime-workspace
 
 # misc
 frontend/.angular/cache
+frontend/.angular
+frontend/angular
+
 frontend/sass-cache
 frontend/connect.lock
 frontend/coverage
