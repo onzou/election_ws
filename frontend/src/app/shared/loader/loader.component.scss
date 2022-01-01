@@ -1,0 +1,72 @@
+@import '../../../custom_styles.scss';
+
+.loaders-container 
+{
+  position: fixed;
+  z-index: 10000000000;
+  top: 0;
+  background-color: rgba($color: #666, $alpha: 0.4);
+  left: 0;
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  font-size: 0;
+  .container {
+    position: relative;
+    align-items: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    padding: 30px;
+    width: 25%;
+    height: 170px;
+  }
+}
+
+.box {
+  position: relative;
+  box-sizing: border-box;
+  border: 1px solid #FFF;
+  border-radius: 8px;
+
+  background-color: var(--green);
+
+  width: 150px;
+  height: 150px;
+  animation: spin 1.5s infinite linear;
+  
+  &:before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    box-sizing: border-box;
+    border: 1px solid #FFF;
+    width: 120px;
+    height: 120px;
+    animation: pulse 1s infinite ease;
+  }
+}
+
+
+@keyframes pulse { 
+  50% { 
+    border-width: 30px;
+  } 
+  95% 
+  {
+    border-radius: 50%;
+  }
+}
+
+@keyframes spin { 
+  100% { 
+    transform: rotate(360deg); 
+  } 
+} 
+
