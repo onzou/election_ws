@@ -1,11 +1,24 @@
 package diagne.election_management_ws.Entities.Elector;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import diagne.election_management_ws.Entities.Role.Role;
+import diagne.election_management_ws.Model.LocalDateDeserializer;
+import diagne.election_management_ws.Model.LocalDateSerializer;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Data
@@ -23,6 +36,9 @@ public class Elector
     @NotBlank(message = "Le prénom est obligatoire")
     private String lastName;
 
+    @NotBlank(message = "Le mot de passe doit être fourni")
+    private String password;
+
     @NotBlank(message = "Le lieu de naissance est obligatoire")
     private String birthPlace;
 
@@ -30,10 +46,24 @@ public class Elector
     @Column(nullable = false)
     private String cni;
 
-    @Column(nullable = true)
-    private String voteArea;
+    private String region;
 
-    private String town;
+    private String department;
+
+    @Transient
+    @JsonIgnore
+    private MultipartFile picture;
+
+    private String picturePath;
+
+    @NotBlank(message = "L'arrondissement est obligatoire")
+    private String arrondissement;
+
+    @NotNull(message = "Vous devez donner votre date de naissance")
+    @JsonDeserialize(using = LocalDateDeserializer.class)
+    @JsonSerialize(using = LocalDateSerializer.class)
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+    private LocalDate birthday;
 
     private String voteOffice;
 
@@ -41,4 +71,7 @@ public class Elector
 
     @Column(name = "elector_number",nullable = true)
     private String electorNumber;
+
+    @OneToMany
+    private Set<Role> roles = new HashSet<>();
 }

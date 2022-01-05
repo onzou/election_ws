@@ -1,8 +1,9 @@
 package diagne.election_management_ws.Entities.VoteOffice;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import diagne.election_management_ws.Entities.Arrondissement.Arrondissement;
 import diagne.election_management_ws.Entities.Vote.Vote;
 import diagne.election_management_ws.Entities.VotersList.VotersList;
-import diagne.election_management_ws.Model.Area;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,11 +18,17 @@ import java.util.Set;
 public class VoteOffice
 {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne
+    @Column(name = "name")
+    private String name;
+
+    @OneToOne()
     private VotersList votersList;
+
+    @ManyToOne
+    private Arrondissement arrondissement;
 
     @OneToMany
     private Set<Vote> votes = new HashSet<>();

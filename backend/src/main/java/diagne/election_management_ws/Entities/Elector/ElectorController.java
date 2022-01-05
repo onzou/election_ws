@@ -1,9 +1,12 @@
 package diagne.election_management_ws.Entities.Elector;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.net.URI;
 
 @RestController
 @RequestMapping(path = "elector")
@@ -23,4 +26,10 @@ public class ElectorController
         return ResponseEntity.ok(electorLoggedIn);
     }
 
+    @PostMapping(path = "signup")
+    public ResponseEntity<Object> signup(@ModelAttribute Elector elector)
+    {
+        return ResponseEntity.created(URI.create("elector"))
+                             .body(this.electorService.save(elector));
+    }
 }

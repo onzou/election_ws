@@ -5,16 +5,25 @@
   padding: 0;
   box-sizing: border-box;
 }
-:root 
+:root
 {
   --green: #2ecc71;
   --white: #ffffff;
   --black: #000000;
   --secondary-black: #0e2332;
+
+  --white: #fff;
+  --lightBG: #dce1df;
+  --salmon: #ff6666;
+  --teal: #0096a0;
+  --tealMid: #0ebac7;
+  --tealContrast: #33ffff;
+  --tealShade:	#007c85;
+  --darkGrey: #4f585e;
 }
 
-body 
+body
 {
   background-color: rgba(var(--white), 0.6);
-  
+
 }

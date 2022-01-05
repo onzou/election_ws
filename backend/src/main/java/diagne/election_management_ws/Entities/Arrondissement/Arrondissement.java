@@ -1,7 +1,7 @@
 package diagne.election_management_ws.Entities.Arrondissement;
 
-import diagne.election_management_ws.Entities.Town.Town;
-import diagne.election_management_ws.Model.Area;
+import diagne.election_management_ws.Entities.Department.Department;
+import diagne.election_management_ws.Entities.VoteOffice.VoteOffice;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -15,12 +15,18 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "arrondissement")
-public class Arrondissement extends Area
+public class Arrondissement
 {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @Column(unique = true)
+    private String name;
+
+    @ManyToOne
+    private Department department;
+
     @OneToMany
-    private Set<Town> towns = new HashSet<>();
+    private Set<VoteOffice> voteOffices = new HashSet<>();
 }
