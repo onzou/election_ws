@@ -7,14 +7,14 @@ import { AuthService } from 'src/app/services/auth.service';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss']
 })
-export class HeaderComponent implements OnInit
+export class HeaderComponent implements OnInit 
 {
 
   isModalOpened: boolean = false;
   isLoginOpened: boolean = true;
   constructor(private auth: AuthService) { }
-
-  ngOnInit(): void
+ 
+  ngOnInit(): void 
   {
     const header = document.getElementById("header");
     if(header != null)
@@ -24,7 +24,7 @@ export class HeaderComponent implements OnInit
         header.classList.toggle("scrolled",window.scrollY> 50)
       });
     }
-
+   
     document.onkeydown = evt => {
       evt = evt || window.event;
       evt.keyCode === 27 ? this.closeModal() : false;
@@ -52,12 +52,15 @@ export class HeaderComponent implements OnInit
 
   login(userCredentials: any)
   {
+    console.log("Logging!");
+
     this.auth.login(userCredentials)
               .subscribe(
                 {
-                  next: (data: HttpResponse<any>) =>
+                  next: (data: HttpResponse<any>) => 
                   {
-
+                    console.log("Logging!");
+                    
                   },
                   error: (error: HttpErrorResponse) => {},
                   complete: () =>{}
@@ -68,6 +71,6 @@ export class HeaderComponent implements OnInit
   signup(userCredentials: any)
   {
     console.log(userCredentials);
-
+    
   }
 }

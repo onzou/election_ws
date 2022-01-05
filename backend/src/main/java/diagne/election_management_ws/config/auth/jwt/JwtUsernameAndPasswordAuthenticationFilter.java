@@ -67,7 +67,7 @@ public class JwtUsernameAndPasswordAuthenticationFilter extends UsernamePassword
             InputStream inputStream = request.getInputStream();
             UsernameAndPasswordAuthenticationRequest authRequest = objectMapper.readValue(inputStream,
                                                                         UsernameAndPasswordAuthenticationRequest.class);
-            Authentication auth = new UsernamePasswordAuthenticationToken(authRequest.getUsername(),authRequest.getPassword());
+            Authentication auth = new UsernamePasswordAuthenticationToken(authRequest.getElectorNumber(),authRequest.getPassword());
             return authenticationManager.authenticate(auth);
         } catch (IOException e)
         {

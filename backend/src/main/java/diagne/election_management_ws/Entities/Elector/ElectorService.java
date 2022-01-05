@@ -2,10 +2,10 @@ package diagne.election_management_ws.Entities.Elector;
 
 import diagne.election_management_ws.Entities.File.FileService;
 import diagne.election_management_ws.Entities.Role.Role;
-import diagne.election_management_ws.Entities.Role.RoleRepository;
 import diagne.election_management_ws.Entities.Role.RoleService;
 import diagne.election_management_ws.Entities.VotersList.VotersList;
 import diagne.election_management_ws.Entities.VotersList.VotersListService;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -17,6 +17,7 @@ import java.time.LocalDate;
 import java.time.Period;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class ElectorService implements UserDetailsService
@@ -49,7 +50,18 @@ public class ElectorService implements UserDetailsService
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException
     {
-        return (UserDetails) this.electorRepository.getElectorByElectorNumber(username);
+        Elector elector = this.electorRepository.getElectorByElectorNumber(username);
+        if(elector == null)
+            throw new UsernameNotFoundException(String.format("Numéro carte électeur %s introuvable",username));
+//        if(elector.getRoles().isEmpty())
+//            elector.getRoles().add(new Role(null,"ROLE_ELECTOR"));
+//        el
+        Set<SimpleGrantedAuthority> authorities = elector.getRoles().stream()
+                .map(role -> new SimpleGrantedAuthority(role.getValue()))
+                .collect(Collectors.toSet());
+
+
+        return new org.springframework.security.core.userdetails.User(elector.getElectorNumber(),elector.getPassword(),authorities);
     }
     
     public Elector save(@ModelAttribute Elector elector)
@@ -91,4 +103,22 @@ public class ElectorService implements UserDetailsService
         return savedElector;
     }
 
+    public void modify(Elector elector)
+    {
+        Set<Role> roles = new HashSet<>();
+        if(elector.isCandidate())
+        {
+            Role role = this.roleService.getRoleByValue("ROLE_CANDIDATE");
+            roles.add(role);
+            elector.setRoles(roles);
+        }
+        else
+        {
+            Role role = this.roleService.getRoleByValue("ROLE_ELECTOR");
+            roles.add(role);
+            elector.setRoles(roles);
+        }
+        elector.setPassword(this.passwordEncoder.encode(elector.getPassword()));
+        this.electorRepository.save(elector);
+    }
 }

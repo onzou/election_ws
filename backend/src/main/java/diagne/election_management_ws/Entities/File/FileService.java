@@ -44,11 +44,11 @@ public class FileService
         }
     }
 
-    public Resource getDownloadResource(String fileFolder, String fileName)
+    public Resource getDownloadResource(String fileName)
     {
         try
         {
-            Path filePath = Paths.get(DEFAULT_UPLOAD_DIRECTORY,fileFolder, fileName);
+            Path filePath = Paths.get(DEFAULT_UPLOAD_DIRECTORY, fileName);
             return new UrlResource(filePath.toUri());
         } catch (MalformedURLException e)
         {

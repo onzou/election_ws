@@ -43,7 +43,7 @@ public class Elector
     private String birthPlace;
 
     @NotBlank(message = "Le numéro de carte d'identité est obligatoire")
-    @Column(nullable = false)
+    @Column(nullable = false,unique = true)
     private String cni;
 
     private String region;
@@ -69,9 +69,9 @@ public class Elector
 
     private boolean isCandidate = false;
 
-    @Column(name = "elector_number",nullable = true)
+    @Column(name = "elector_number",nullable = false,unique = true)
     private String electorNumber;
 
-    @OneToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     private Set<Role> roles = new HashSet<>();
 }
