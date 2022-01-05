@@ -57,6 +57,8 @@ frontend/*.launch
 frontend/settings/
 frontend/*.sublime-workspace
 
+backend/public
+
 # IDE - VSCode
 .vscode/*
 !.vscode/settings.json
