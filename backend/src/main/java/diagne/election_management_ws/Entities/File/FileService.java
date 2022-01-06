@@ -48,7 +48,7 @@ public class FileService
     {
         try
         {
-            Path filePath = Paths.get(DEFAULT_UPLOAD_DIRECTORY, fileName);
+            Path filePath = Paths.get(fileName);
             return new UrlResource(filePath.toUri());
         } catch (MalformedURLException e)
         {

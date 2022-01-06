@@ -34,12 +34,8 @@ public class VotersListService
 
     public VotersList getVoters_listByVoteOfficeAndArrondissement(String voteOfficeName, String arrondissementName)
     {
-        Arrondissement arrondissement = this.arrondissementService.getArrondissementByName(arrondissementName);
-        List<VoteOffice> voteOfficesRetrieved = this.voteOfficeService.getVoteOfficesByArrondissement(arrondissement.getId());
-        Set<VoteOffice> voteOfficeFiltered = voteOfficesRetrieved.stream()
-                                    .filter(voteOffice -> voteOffice.getName().equals(voteOfficeName))
-                                    .collect(Collectors.toSet());
-        Optional<VoteOffice> voteOfficeOptional = voteOfficeFiltered.stream().findFirst();
+
+        Optional<VoteOffice> voteOfficeOptional = this.getVoteOfficeByNameAndArrondissement(voteOfficeName,arrondissementName);
         if(voteOfficeOptional.isPresent())
         {
             VoteOffice voteOffice1 = voteOfficeOptional.get();
@@ -52,5 +48,11 @@ public class VotersListService
     public VotersList save(VotersList votersList)
     {
         return this.votersListRepo.saveAndFlush(votersList);
+    }
+
+    public Optional<VoteOffice> getVoteOfficeByNameAndArrondissement(String voteOfficeName, String arrondissementName)
+    {
+        Arrondissement arrondissement = this.arrondissementService.getArrondissementByName(arrondissementName);
+        return this.voteOfficeService.getVoteOfficeByNameAndArrondissement(voteOfficeName,arrondissement.getId());
     }
 }

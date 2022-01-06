@@ -2,16 +2,14 @@ package diagne.election_management_ws.Entities.Arrondissement;
 
 import diagne.election_management_ws.Entities.Department.Department;
 import diagne.election_management_ws.Entities.VoteOffice.VoteOffice;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Data
+@Getter @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "arrondissement")
@@ -27,6 +25,6 @@ public class Arrondissement
     @ManyToOne
     private Department department;
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.EAGER)
     private Set<VoteOffice> voteOffices = new HashSet<>();
 }

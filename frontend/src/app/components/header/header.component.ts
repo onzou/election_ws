@@ -52,19 +52,19 @@ export class HeaderComponent implements OnInit
 
   login(userCredentials: any)
   {
-    console.log("Logging!");
-
     this.auth.login(userCredentials)
-              .subscribe(
-                {
-                  next: (data: HttpResponse<any>) => 
-                  {
-                    console.log("Logging!");
-                    
-                  },
-                  error: (error: HttpErrorResponse) => {},
-                  complete: () =>{}
-                }
+              .subscribe((data: HttpResponse<any>) => 
+              {
+                let token = data.headers.get('authorization');
+                let userId = data.headers.get('userId');
+                sessionStorage.setItem('token',String(token));
+                sessionStorage.setItem('user',String(userId));
+                this.closeModal();
+                
+              },(error: HttpErrorResponse)=>
+              {
+
+              },() => {}
               );
   }
 

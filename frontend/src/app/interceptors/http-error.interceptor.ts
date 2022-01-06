@@ -15,8 +15,7 @@ import { AuthService } from '../services/auth.service';
 export class ErrorInterceptor implements HttpInterceptor 
 {
 
-  constructor(private toast: ToastrService, 
-              private authService: AuthService) {}
+  constructor(private toast: ToastrService) {}
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> 
   {

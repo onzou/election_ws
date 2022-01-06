@@ -38,7 +38,10 @@ export class SuperService
     return this.httpClient.post(`${this.apiURL + uri}`,objectToPost, {observe: 'response'});
   }
 
-
+  postWithParams(uri: string, params: any, objectToPost: any): Observable<any>
+  {
+    return this.httpClient.post(`${this.apiURL + uri + this.paramStringBuilder(params)}`,objectToPost, {observe: 'response'});
+  }
   update(uri: string, objectToUpdate: any)
   {
     return this.httpClient.put(`${this.apiURL + uri}`, objectToUpdate, {observe: 'response'})

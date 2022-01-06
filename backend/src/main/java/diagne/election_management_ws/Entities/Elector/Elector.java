@@ -68,6 +68,7 @@ public class Elector
     private String voteOffice;
 
     private boolean isCandidate = false;
+    private boolean hasVoted = false;
 
     @Column(name = "elector_number",nullable = false,unique = true)
     private String electorNumber;

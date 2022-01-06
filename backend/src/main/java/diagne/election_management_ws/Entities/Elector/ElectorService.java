@@ -13,9 +13,11 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
+import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -120,5 +122,21 @@ public class ElectorService implements UserDetailsService
         }
         elector.setPassword(this.passwordEncoder.encode(elector.getPassword()));
         this.electorRepository.save(elector);
+    }
+
+    public List<Elector> getAllCandidates()
+    {
+        return this.electorRepository.findAllCandidates();
+    }
+
+    public Elector getElectorById(Long electorId)
+    {
+        return this.electorRepository.getById(electorId);
+    }
+
+    @Transactional
+    public void updateAfterVoting(Elector elector)
+    {
+        this.electorRepository.updateAfterVoting(elector.getId());
     }
 }

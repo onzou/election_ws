@@ -9,11 +9,11 @@
         <li>
           <a href="#" class="visualize">Visualiser</a>
         </li>
-        <li class="box voter" *ngIf="isUserLoggedIn()">
-          <a href="#" >Voter</a>
+        <li class="box voter" *ngIf="isUserLoggedIn()" routerLink="vote">
+          <a>Vote</a>
         </li>
-        <li class="box login" *ngIf="!isUserLoggedIn()">
-          <a href="#" (click)="openModal()">Se connecter</a>
+        <li class="box login" *ngIf="!isUserLoggedIn()" (click)="openModal()">
+          <a  >Se connecter</a>
         </li>
       </ul>
     </nav>

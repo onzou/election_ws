@@ -4,9 +4,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
+import java.util.List;
 
 @RestController
 @RequestMapping(path = "elector")
+@CrossOrigin
 public class ElectorController
 {
     private final ElectorService electorService;
@@ -36,5 +38,12 @@ public class ElectorController
         this.electorService.modify(elector);
         return ResponseEntity.ok(null);
     }
+
+    @GetMapping(path = "candidate")
+    public ResponseEntity<List<Elector>> getCandidates()
+    {
+        return ResponseEntity.ok(this.electorService.getAllCandidates());
+    }
+
 
 }

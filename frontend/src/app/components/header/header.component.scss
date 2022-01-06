@@ -246,6 +246,7 @@ header
   transition: 0.3s ease-out;
   padding: 15px 100px;
   font-size: 18px;
+  z-index: 10;
   &.scrolled
   {
     position: fixed;

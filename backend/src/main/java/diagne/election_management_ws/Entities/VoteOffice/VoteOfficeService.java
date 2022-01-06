@@ -3,6 +3,7 @@ package diagne.election_management_ws.Entities.VoteOffice;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class VoteOfficeService
@@ -19,8 +20,8 @@ public class VoteOfficeService
         return this.voteOfficeRepo.saveAll(voteOfficeList);
     }
 
-    public List<VoteOffice> getVoteOfficesByArrondissement(Long arrondissementId)
+    public Optional<VoteOffice> getVoteOfficeByNameAndArrondissement(String voteOfficename, Long arrondissementId)
     {
-        return this.voteOfficeRepo.findVoteOfficeByArrondissement_Id(arrondissementId);
+        return this.voteOfficeRepo.getVoteOfficeByNameAndArrondissement(voteOfficename,arrondissementId);
     }
 }

@@ -1,17 +1,15 @@
 <div class="cards">
 
-    <div class="card">
-      <div class="card__image-holder">
-        <img class="card__image" src="https://source.unsplash.com/300x225/?wave" alt="wave" />
+
+
+    <div class="card" *ngFor="let candidat of candidates">
+      <div class="card__image-holder" style="background-image: url('{{hostFile + candidat.picturePath}}'); background-position: center; background-size: cover; height: 350px;">
+        <!-- <img class="card__image" alt="river" /> -->
       </div>
       <div class="card-title">
-  <!--       <a href="#" class="toggle-info btn">
-          <span class="left"></span>
-          <span class="right"></span>
-        </a> -->
         <h2>
-            Card title
-            <small>Image from unsplash.com</small>
+            {{candidat.firstName}} {{candidat.lastName}} 
+            <small>Pastef</small>
         </h2>
       </div>
       <div class="card-flap flap1">
@@ -20,203 +18,41 @@
         </div>
         <div class="card-flap flap2">
           <div class="card-actions">
-            <a href="#" class="btn">Read more</a>
+            <a  class="btn" (click)="openModal(candidat)" style="cursor: pointer;" >Voter</a>
           </div>
         </div>
       </div>
     </div>
   
-    <div class="card">
-      <div class="card__image-holder">
-        <img class="card__image" src="https://source.unsplash.com/300x225/?beach" alt="beach" />
-      </div>
-      <div class="card-title">
-        <h2>
-            Card title
-            <small>Image from unsplash.com</small>
-        </h2>
-      </div>
-      <div class="card-flap flap1">
-        <div class="card-description">
-          This grid is an attempt to make something nice that works on touch devices. Ignoring hover states when they're not available etc.
-        </div>
-        <div class="card-flap flap2">
-          <div class="card-actions">
-            <a href="#" class="btn">Read more</a>
-          </div>
-        </div>
-      </div>
-    </div>
-  
-    <div class="card">
-      <div class="card__image-holder">
-        <img class="card__image" src="https://source.unsplash.com/300x225/?mountain" alt="mountain" />
-      </div>
-      <div class="card-title">
-        <a href="#" class="toggle-info btn">
-          <span class="left"></span>
-          <span class="right"></span>
-        </a>
-        <h2>
-            Card title
-            <small>Image from unsplash.com</small>
-        </h2>
-      </div>
-      <div class="card-flap flap1">
-        <div class="card-description">
-          This grid is an attempt to make something nice that works on touch devices. Ignoring hover states when they're not available etc.
-        </div>
-        <div class="card-flap flap2">
-          <div class="card-actions">
-            <a href="#" class="btn">Read more</a>
-          </div>
-        </div>
-      </div>
-    </div>
-  
-    <div class="card">
-      <div class="card__image-holder">
-        <img class="card__image" src="https://source.unsplash.com/300x225/?field" alt="field" />
-      </div>
-      <div class="card-title">
-        <h2>
-            Card title
-            <small>Image from unsplash.com</small>
-        </h2>
-      </div>
-      <div class="card-flap flap1">
-        <div class="card-description">
-          This grid is an attempt to make something nice that works on touch devices. Ignoring hover states when they're not available etc.
-        </div>
-        <div class="card-flap flap2">
-          <div class="card-actions">
-            <a href="#" class="btn">Read more</a>
-          </div>
-        </div>
-      </div>
-    </div>
-  
-    <div class="card">
-      <div class="card__image-holder">
-        <img class="card__image" src="https://source.unsplash.com/300x225/?water" alt="water" />
-      </div>
-      <div class="card-title">
-  
-        <h2>
-            Card title
-            <small>Image from unsplash.com</small>
-        </h2>
-      </div>
-      <div class="card-flap flap1">
-        <div class="card-description">
-          This grid is an attempt to make something nice that works on touch devices. Ignoring hover states when they're not available etc.
-        </div>
-        <div class="card-flap flap2">
-          <div class="card-actions">
-            <a href="#" class="btn">Read more</a>
-          </div>
-        </div>
-      </div>
-    </div>
-  
-    <div class="card">
-      <div class="card__image-holder">
-        <img class="card__image" src="https://source.unsplash.com/300x225/?river" alt="river" />
-      </div>
-      <div class="card-title">
-        <h2>
-            Card title
-            <small>Image from unsplash.com</small>
-        </h2>
-      </div>
-      <div class="card-flap flap1">
-        <div class="card-description">
-          This grid is an attempt to make something nice that works on touch devices. Ignoring hover states when they're not available etc.
-        </div>
-        <div class="card-flap flap2">
-          <div class="card-actions">
-            <a href="#" class="btn">Read more</a>
-          </div>
-        </div>
-      </div>
-    </div>
-  
-    <div class="card">
-      <div class="card__image-holder">
-        <img class="card__image" src="https://source.unsplash.com/300x225/?kite" alt="kite" />
-      </div>
-      <div class="card-title">
-        <h2>
-            Card title
-            <small>Image from unsplash.com</small>
-        </h2>
-      </div>
-      <div class="card-flap flap1">
-        <div class="card-description">
-          This grid is an attempt to make something nice that works on touch devices. Ignoring hover states when they're not available etc.
-        </div>
-        <div class="card-flap flap2">
-          <div class="card-actions">
-            <a href="#" class="btn">Read more</a>
-          </div>
-        </div>
-      </div>
-    </div>
-    
-    <div class="card">
-      <div class="card__image-holder">
-        <img class="card__image" src="https://source.unsplash.com/300x225/?underwater" alt="underwater" />
-      </div>
-      <div class="card-title">
-        <a href="#" class="toggle-info btn">
-          <span class="left"></span>
-          <span class="right"></span>
-        </a>
-        <h2>
-            Card title
-            <small>Image from unsplash.com</small>
-        </h2>
-      </div>
-      <div class="card-flap flap1">
-        <div class="card-description">
-          This grid is an attempt to make something nice that works on touch devices. Ignoring hover states when they're not available etc.
-        </div>
-        <div class="card-flap flap2">
-          <div class="card-actions">
-            <a href="#" class="btn">Read more</a>
-          </div>
-        </div>
-      </div>
-    </div>
-  
-    <div class="card">
-      <div class="card__image-holder">
-        <img class="card__image" src="https://source.unsplash.com/300x225/?desert" alt="desert" />
-      </div>
-      <div class="card-title">
-        <a href="#" class="toggle-info btn">
-          <span class="left"></span>
-          <span class="right"></span>
-        </a>
-        <h2>
-            Card title
-            <small>Image from unsplash.com</small>
-        </h2>
-      </div>
-      <div class="card-flap flap1">
-        <div class="card-description">
-          This grid is an attempt to make something nice that works on touch devices. Ignoring hover states when they're not available etc.
-        </div>
-        <div class="card-flap flap2">
-          <div class="card-actions">
-            <a href="#" class="btn">Read more</a>
-          </div>
-        </div>
-      </div>
-    </div>
   
   </div>
   
+
+  <div class="modal" [class.is-open]="isModalOpened" style="z-index: 2;">
+    <div class="modal-container">
+      <div class="modal-left">
+        <h1 class="modal-title" >Vote</h1>
+
+        <div class="input-block" style="border: none; height: 65%;align-items: center;justify-content: center;">
+          <h3 class="input-label">{{chosenCandidate.firstName}} {{chosenCandidate.lastName}}</h3>
+          <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Dolorum, odit.</p>
+        </div>
+        <div class="modal-buttons">
+          <button class="input-button" type="submit" [disabled]="hasAlreadyVoted" (click)="vote()" >Confimer</button>
+        </div>
+      </div>
+        <div class="modal-right">
+          <img src="{{hostFile + chosenCandidate.picturePath}}" alt="" style="max-height: 400px;">
+        </div>
+      
+     
+      <button class="icon-button close-button" (click)="closeModal()">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50">
+          <path d="M 25 3 C 12.86158 3 3 12.86158 3 25 C 3 37.13842 12.86158 47 25 47 C 37.13842 47 47 37.13842 47 25 C 47 12.86158 37.13842 3 25 3 z M 25 5 C 36.05754 5 45 13.94246 45 25 C 45 36.05754 36.05754 45 25 45 C 13.94246 45 5 36.05754 5 25 C 5 13.94246 13.94246 5 25 5 z M 16.990234 15.990234 A 1.0001 1.0001 0 0 0 16.292969 17.707031 L 23.585938 25 L 16.292969 32.292969 A 1.0001 1.0001 0 1 0 17.707031 33.707031 L 25 26.414062 L 32.292969 33.707031 A 1.0001 1.0001 0 1 0 33.707031 32.292969 L 26.414062 25 L 33.707031 17.707031 A 1.0001 1.0001 0 0 0 32.980469 15.990234 A 1.0001 1.0001 0 0 0 32.292969 16.292969 L 25 23.585938 L 17.707031 16.292969 A 1.0001 1.0001 0 0 0 16.990234 15.990234 z"></path>
+        </svg>
+      </button>
+    </div>
+  </div>
   
   
   
