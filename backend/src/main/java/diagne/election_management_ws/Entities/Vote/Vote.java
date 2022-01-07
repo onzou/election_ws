@@ -22,12 +22,9 @@ public class Vote
     @OneToOne(optional = true)
     private Elector candidate;
 
-    @Column(name = "vote_number",nullable = false)
-    private int voteNumber = 1;
-
-    @OneToOne(optional = false)
     @JsonIgnore
-    private Elector voter;
+    @Column(name = "voter", unique = true)
+    private Long voterId;
 
     @ManyToOne
     private VoteOffice voteOffice;

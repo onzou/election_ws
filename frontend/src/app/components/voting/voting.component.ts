@@ -10,6 +10,7 @@ import { environment as env } from 'src/environments/environment';
 })
 export class VotingComponent implements OnInit 
 {
+  defaultCandidateImagePath: string = "../../assets/default_candidate.jpg"
   //booleans 
   isModalOpened: boolean = false;
   hasAlreadyVoted: boolean = false;

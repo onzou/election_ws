@@ -30,7 +30,7 @@ public class Department
     @ManyToOne
     private Region region;
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.EAGER)
     private Set<Arrondissement> arrondissements = new HashSet<>();
 }
 

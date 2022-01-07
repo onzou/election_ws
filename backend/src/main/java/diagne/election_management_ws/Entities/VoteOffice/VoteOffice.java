@@ -39,6 +39,6 @@ public class VoteOffice
     @JsonIgnore
     private Arrondissement arrondissement;
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.EAGER)
     private Set<Vote> votes = new HashSet<>();
 }
