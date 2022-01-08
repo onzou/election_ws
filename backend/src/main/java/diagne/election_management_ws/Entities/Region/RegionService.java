@@ -2,6 +2,8 @@ package diagne.election_management_ws.Entities.Region;
 
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class RegionService
 {
@@ -13,4 +15,8 @@ public class RegionService
     }
 
 
+    public List<Region> getAllRegions()
+    {
+        return this.regionRepo.findAll();
+    }
 }

@@ -23,4 +23,9 @@ public class ArrondissementService
     {
         return this.arrondissementRepository.findAll();
     }
+
+    public List<Arrondissement> getAllInSpecificDepartment(Long departmentId)
+    {
+        return this.arrondissementRepository.getArrondissementsByDepartmentId(departmentId);
+    }
 }

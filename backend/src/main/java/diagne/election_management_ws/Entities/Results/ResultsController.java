@@ -18,13 +18,13 @@ public class ResultsController
     @GetMapping(path = "region")
     public ResponseEntity<Object> getResultsInRegions()
     {
-        return null;
+        return ResponseEntity.ok(this.resultsService.getResultsInRegions());
     }
 
     @GetMapping(path = "department")
     public ResponseEntity<Object> getResultsInDepartments()
     {
-        return null;
+        return ResponseEntity.ok(this.resultsService.getResultsInDepartments());
     }
 
     @GetMapping(path = "arrondissement")
@@ -37,5 +37,11 @@ public class ResultsController
     public ResponseEntity<Object> getResultsInSpecificArrondissement(@PathVariable String name)
     {
         return ResponseEntity.ok(this.resultsService.getResultsInSpecificArrondissement(name));
+    }
+
+    @GetMapping(path = "department/{name}")
+    public ResponseEntity<Object> getResultsInSpecificDepartment(@PathVariable String name)
+    {
+        return ResponseEntity.ok(this.resultsService.getResultsInSpecificDepartment(name));
     }
 }

@@ -18,4 +18,14 @@ public class DepartmentService
     {
         return this.departmentRepo.findAll();
     }
+
+    public Department getDepartmentByName(String name)
+    {
+        return this.departmentRepo.getByName(name);
+    }
+
+    public List<Department> getAllInSpecificRegion(Long regionId)
+    {
+        return this.departmentRepo.getDepartmentByRegionId(regionId);
+    }
 }
