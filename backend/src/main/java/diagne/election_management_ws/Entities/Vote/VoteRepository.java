@@ -30,11 +30,14 @@ public interface VoteRepository extends JpaRepository<Vote,Long>
     @Query(value = "SELECT count(*) FROM vote WHERE candidate_id = :candidateId",nativeQuery = true)
     int getNumberOfVotesByCandidateId(@Param("candidateId") Long candidateId);
 
-    @Query(value = "SELECT count(*) FROM vote WHERE candidate_id = null", nativeQuery = true)
-    int getBulletinNulByVoteOffice(Long id);
+    @Query(value = "SELECT count(*) FROM vote WHERE candidate_id = null and vote_office_id = :id", nativeQuery = true)
+    int getBulletinNulByVoteOffice(@Param("id") Long id);
 
     @Query(value = "select count(*) from vote, arrondissement_vote_offices as arr_vo " +
             "where vote.vote_office_id = arr_vo.vote_offices_id and arr_vo.arrondissement_id = :arrondissementId " +
             "and vote.candidate_id = :candidateId", nativeQuery = true)
     int getNumberOfVotesByCandidateIdAndArrondissementId(@Param("candidateId") Long candidateId,@Param("arrondissementId") Long arrondissementId);
+
+    @Query(value = "SELECT count(*) FROM vote WHERE candidate_id = null", nativeQuery = true)
+    int getAllBulletinNul();
 }

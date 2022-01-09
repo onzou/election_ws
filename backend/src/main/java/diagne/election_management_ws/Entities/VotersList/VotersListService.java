@@ -55,4 +55,9 @@ public class VotersListService
         Arrondissement arrondissement = this.arrondissementService.getArrondissementByName(arrondissementName);
         return this.voteOfficeService.getVoteOfficeByNameAndArrondissement(voteOfficeName,arrondissement.getId());
     }
+
+    public long getTotal()
+    {
+        return this.votersListRepo.count();
+    }
 }

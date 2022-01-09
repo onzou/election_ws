@@ -35,7 +35,7 @@ public class VoteOffice
                 '}';
     }
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne()
     @JsonIgnore
     private Arrondissement arrondissement;
 

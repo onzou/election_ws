@@ -22,7 +22,7 @@ public class Arrondissement
     @Column(unique = true)
     private String name;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne()
     private Department department;
 
     @OneToMany(fetch = FetchType.EAGER)

@@ -1,7 +1,12 @@
 package diagne.election_management_ws.Entities.Results;
 
+import diagne.election_management_ws.Model.Results;
+import diagne.election_management_ws.Model.SummaryResults;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 @RequestMapping(path = "results")
@@ -44,4 +49,11 @@ public class ResultsController
     {
         return ResponseEntity.ok(this.resultsService.getResultsInSpecificDepartment(name));
     }
+
+    @GetMapping(path = "totals")
+    public ResponseEntity<SummaryResults> getTotalSummary()
+    {
+        return ResponseEntity.ok(this.resultsService.getTotals());
+    }
+
 }

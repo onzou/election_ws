@@ -15,6 +15,7 @@ import { LoadingInterceptor } from './interceptors/loading.interceptor';
 import { LoaderComponent } from './shared/loader/loader.component';
 import { CommonModule } from '@angular/common';
 import { VotingComponent } from './components/voting/voting.component';
+import { PowerBIEmbedModule } from 'powerbi-client-angular';
 
 @NgModule({
   declarations: [
@@ -34,6 +35,7 @@ import { VotingComponent } from './components/voting/voting.component';
     FormsModule, 
     ReactiveFormsModule,
     HttpClientModule,
+    PowerBIEmbedModule,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },

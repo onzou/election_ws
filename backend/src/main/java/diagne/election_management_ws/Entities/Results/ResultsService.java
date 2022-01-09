@@ -11,8 +11,10 @@ import diagne.election_management_ws.Entities.Region.RegionService;
 import diagne.election_management_ws.Entities.Vote.Vote;
 import diagne.election_management_ws.Entities.Vote.VoteService;
 import diagne.election_management_ws.Entities.VoteOffice.VoteOffice;
+import diagne.election_management_ws.Entities.VotersList.VotersListService;
 import diagne.election_management_ws.Model.Results;
 import diagne.election_management_ws.Model.CandidateResult;
+import diagne.election_management_ws.Model.SummaryResults;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -26,21 +28,25 @@ public class ResultsService
     private final ArrondissementService arrondissementService;
     private final VoteService voteService;
     private final ElectorService electorService;
+    private final VotersListService votersListService;
+
 
     public ResultsService(RegionService regionService,
                           DepartmentService departmentService,
                           ArrondissementService arrondissementService,
                           VoteService voteService,
-                          ElectorService electorService)
+                          ElectorService electorService,
+                          VotersListService votersListService)
     {
         this.regionService = regionService;
         this.departmentService = departmentService;
         this.arrondissementService = arrondissementService;
         this.voteService = voteService;
         this.electorService = electorService;
+        this.votersListService = votersListService;
     }
 
-    public Object getResultsInRegions()
+    public List<Results> getResultsInRegions()
     {
         List<Results> finalResults = new ArrayList<>();
 
@@ -184,18 +190,19 @@ public class ResultsService
     public List<Results> getResultsInArrondissements()
     {
         List<Arrondissement> arrondissements = this.arrondissementService.getAll();
-        HashMap<String,Object> allArrondissementsResults = new HashMap<>();
         List<Elector> candidates = this.electorService.getAllCandidates();
         List<Results> finalResults = new ArrayList<>();
-
+        int nbreInscrit = 0;
+        int nbreVotants = 0;
+        int bulletinNul = 0;
 //        List<Arrondissement>
         for (Arrondissement next : arrondissements)
         {
             Set<VoteOffice> voteOffices = next.getVoteOffices();
             Results arrondissementResult = new Results();
-            int nbreInscrit = 0;
-            int nbreVotants = 0;
-            int bulletinNul = 0;
+            nbreInscrit = 0;
+            nbreVotants = 0;
+            bulletinNul = 0;
             for(VoteOffice voteOffice: voteOffices)
             {
                 List<Vote> votes = this.voteService.getVotesByVoteOffice(voteOffice.getId());
@@ -244,5 +251,14 @@ public class ResultsService
     public Department getResultsInSpecificDepartment(String name)
     {
         return this.departmentService.getDepartmentByName(name);
+    }
+
+
+    public SummaryResults getTotals()
+    {
+        long nbreInscrits = this.votersListService.getTotal();
+        long nbreVotants = this.voteService.getTotalVotes();
+        long bulletinNul = this.voteService.getAllBulletinNul();
+        return new SummaryResults(nbreInscrits,nbreVotants,bulletinNul);
     }
 }

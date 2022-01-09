@@ -67,5 +67,15 @@ public class VoteService
         return this.voteRepo.getNumberOfVotesByCandidateIdAndArrondissementId(candidateId,arrondissementId);
     }
 
+    public long getTotalVotes()
+    {
+        return this.voteRepo.count();
+    }
+
+    public long getAllBulletinNul()
+    {
+        return this.voteRepo.getAllBulletinNul();
+    }
+
 //    public int getVotesByCandidate(Long vote)
 }
