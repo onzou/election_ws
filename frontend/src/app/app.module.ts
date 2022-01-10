@@ -15,7 +15,10 @@ import { LoadingInterceptor } from './interceptors/loading.interceptor';
 import { LoaderComponent } from './shared/loader/loader.component';
 import { CommonModule } from '@angular/common';
 import { VotingComponent } from './components/voting/voting.component';
-import { PowerBIEmbedModule } from 'powerbi-client-angular';
+import { VisualizationComponent } from './components/data-visualization/visualization/visualization.component';
+import { PieChartComponent } from './components/data-visualization/pie-chart/pie-chart.component';
+import { BarChartComponent } from './components/data-visualization/bar-chart/bar-chart.component';
+import { NgxEchartsModule } from 'ngx-echarts';
 
 @NgModule({
   declarations: [
@@ -26,7 +29,10 @@ import { PowerBIEmbedModule } from 'powerbi-client-angular';
     LoginComponent,
     SignupComponent,
     LoaderComponent,
-    VotingComponent
+    VotingComponent,
+    VisualizationComponent,
+    PieChartComponent,
+    BarChartComponent
   ],
   imports: [
     BrowserModule,
@@ -35,7 +41,9 @@ import { PowerBIEmbedModule } from 'powerbi-client-angular';
     FormsModule, 
     ReactiveFormsModule,
     HttpClientModule,
-    PowerBIEmbedModule,
+    NgxEchartsModule.forRoot({
+      echarts: ()=> import('echarts')
+    }),
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },

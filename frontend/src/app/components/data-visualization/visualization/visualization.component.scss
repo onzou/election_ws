@@ -1,0 +1,91 @@
+.map__image 
+{
+    width: 100%;
+    height: 750px;    
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    svg 
+    {
+        width: 60%;
+        float: left;
+        min-width: 460px;
+
+    }
+    .pie__chart
+    {
+        width: 40%;
+        // min-width: 460px;
+        float: right;
+        // margin-bottom: 50px;
+    }
+    path 
+    {
+        fill: #fff;
+        stroke: black;
+        transition: fill 0.3s ease;
+        &:hover 
+        {
+            fill: black;
+            stroke: white;
+        }
+        &::before
+        {
+            content: "Dakar";
+            width: 20px;
+            height: 20px;
+            position: absolute;
+            top:0;
+            left: 0;
+        }
+    }
+}
+
+.container .charts
+{
+    // margin-top: 100px;
+    width: 90%;
+    .bar__chart
+    {
+        height: 500px;
+        width: 100%;
+    }
+}
+
+.summary-container
+{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin: 100px 0;
+
+    .summaryStats
+    {
+        display: flex;
+        justify-content: space-around;
+        gap: 90px;
+    }
+}
+
+.item
+{
+  height: 100px;
+  width: 150px;
+  border: 2px solid green;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  box-shadow: 2px 2px 10px rgba(0,0,0,0.3);
+  div 
+  {
+    font-weight: bold;
+    font-style: italic;
+  }
+  p 
+  {
+    font-size: 25px;
+  }
+}
