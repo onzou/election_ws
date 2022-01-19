@@ -23,4 +23,7 @@ public interface ElectorRepository extends JpaRepository<Elector, Long>
     @Modifying()
     @Query(value = "UPDATE elector SET has_voted = 1 WHERE id = :electorId",nativeQuery = true)
     void updateAfterVoting(@Param("electorId") Long electorId);
+
+    @Query(value = "SELECT * FROM elector WHERE id = :electorId",nativeQuery = true)
+    Elector getElectorById(@Param("electorId") Long electorId);
 }

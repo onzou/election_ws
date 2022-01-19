@@ -8,8 +8,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 @Service
 public class VotersListService
@@ -59,5 +57,10 @@ public class VotersListService
     public long getTotal()
     {
         return this.votersListRepo.count();
+    }
+
+    public VotersList getVotersListByElectorId(Long electorId)
+    {
+        return this.votersListRepo.getVotersListByElectorId(electorId);
     }
 }

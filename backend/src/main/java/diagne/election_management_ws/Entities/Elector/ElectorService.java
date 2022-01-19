@@ -22,6 +22,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
+@Transactional
 public class ElectorService implements UserDetailsService
 {
     private final ElectorRepository electorRepository;
@@ -65,7 +66,8 @@ public class ElectorService implements UserDetailsService
 
         return new org.springframework.security.core.userdetails.User(elector.getElectorNumber(),elector.getPassword(),authorities);
     }
-    
+
+    @Transactional
     public Elector save(@ModelAttribute Elector elector)
     {
         Elector savedElector = null;
@@ -108,18 +110,17 @@ public class ElectorService implements UserDetailsService
     public void modify(Elector elector)
     {
         Set<Role> roles = new HashSet<>();
+        Role role;
         if(elector.isCandidate())
         {
-            Role role = this.roleService.getRoleByValue("ROLE_CANDIDATE");
-            roles.add(role);
-            elector.setRoles(roles);
+            role = this.roleService.getRoleByValue("ROLE_CANDIDATE");
         }
         else
         {
-            Role role = this.roleService.getRoleByValue("ROLE_ELECTOR");
-            roles.add(role);
-            elector.setRoles(roles);
+            role = this.roleService.getRoleByValue("ROLE_ELECTOR");
         }
+        roles.add(role);
+        elector.setRoles(roles);
         elector.setPassword(this.passwordEncoder.encode(elector.getPassword()));
         this.electorRepository.save(elector);
     }
@@ -131,12 +132,63 @@ public class ElectorService implements UserDetailsService
 
     public Elector getElectorById(Long electorId)
     {
-        return this.electorRepository.getById(electorId);
+        return this.electorRepository.getElectorById(electorId);
     }
 
     @Transactional
     public void updateAfterVoting(Elector elector)
     {
         this.electorRepository.updateAfterVoting(elector.getId());
+    }
+
+    @Transactional
+    public void changeVoteArea(Elector elector, String regionName, String arrondissementName, String voteOfficeName)
+    {
+        Elector electorToModify = this.getElectorById(elector.getId());
+        VotersList votersListToModify = this.votersListService.getVotersListByElectorId(elector.getId());
+        votersListToModify.getElectors().remove(elector);
+
+        electorToModify.setRegion(regionName);
+        electorToModify.setArrondissement(arrondissementName);
+        electorToModify.setVoteOffice(voteOfficeName);
+
+        VotersList electorVotersList = this.votersListService.getVoters_listByVoteOfficeAndArrondissement(voteOfficeName,arrondissementName);
+        electorVotersList.getElectors().add(electorToModify);
+    }
+
+    public void saveAll(List<Elector> electors)
+    {
+        for(Elector elector: electors)
+        {
+            this.modify(elector);
+        }
+    }
+
+
+    private String getAlphaNumericString(int n)
+    {
+
+        // chose a Character random from this String
+        String AlphaNumericString = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+                + "0123456789"
+                + "abcdefghijklmnopqrstuvxyz";
+
+        // create StringBuffer size of AlphaNumericString
+        StringBuilder sb = new StringBuilder(n);
+
+        for (int i = 0; i < n; i++) {
+
+            // generate a random number between
+            // 0 to AlphaNumericString variable length
+            int index
+                    = (int)(AlphaNumericString.length()
+                    * Math.random());
+
+            // add Character one by one in end of sb
+            sb.append(AlphaNumericString
+                    .charAt(index));
+        }
+
+        return sb.toString();
     }
 }

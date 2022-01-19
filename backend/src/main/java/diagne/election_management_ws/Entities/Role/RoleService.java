@@ -1,5 +1,4 @@
 package diagne.election_management_ws.Entities.Role;
-
 import org.springframework.stereotype.Service;
 
 @Service

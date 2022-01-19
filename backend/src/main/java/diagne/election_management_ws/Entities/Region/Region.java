@@ -1,14 +1,12 @@
 package diagne.election_management_ws.Entities.Region;
 
 import diagne.election_management_ws.Entities.Department.Department;
-import diagne.election_management_ws.Model.Area;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -20,7 +18,7 @@ import java.util.Set;
 public class Region
 {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @Column(unique = true)

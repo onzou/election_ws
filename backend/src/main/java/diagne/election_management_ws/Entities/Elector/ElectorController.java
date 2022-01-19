@@ -2,7 +2,6 @@ package diagne.election_management_ws.Entities.Elector;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.net.URI;
 import java.util.List;
 
@@ -45,5 +44,20 @@ public class ElectorController
         return ResponseEntity.ok(this.electorService.getAllCandidates());
     }
 
+    @PostMapping(path = "vote-area-change")
+    public ResponseEntity<Object> changeVoteArea(@RequestBody Elector elector,
+                                                 @RequestParam("region") String regionName,
+                                                 @RequestParam("arrondissement") String arrondissementName,
+                                                 @RequestParam("voteOffice") String voteOfficeName)
+    {
+        this.electorService.changeVoteArea(elector,regionName,arrondissementName,voteOfficeName);
+        return ResponseEntity.ok("Vote effectué avec succès");
+    }
 
+    @PostMapping(path = "save")
+    public ResponseEntity<Object> save(@RequestBody List<Elector> electors)
+    {
+        this.electorService.saveAll(electors);
+        return ResponseEntity.ok(null);
+    }
 }

@@ -1,5 +1,7 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { AnyCatcher } from 'rxjs/internal/AnyCatcher';
+import { ResultsService } from 'src/app/services/results.service';
 
 @Component({
   selector: 'app-visualization',
@@ -11,7 +13,7 @@ export class VisualizationComponent implements OnInit
   optionPie: any;
   optionBar: any;
 
-  constructor() { }
+  constructor(private results: ResultsService) { }
 
   ngOnInit(): void 
   {
@@ -118,6 +120,20 @@ export class VisualizationComponent implements OnInit
         }
       ]
     };
+
+    this.getRegionsResults();
+  }
+
+  getRegionsResults()
+  {
+    this.results.getResultsInRegions()
+              .subscribe((data:any)=>
+              {
+                console.log(data);
+              },(error: HttpErrorResponse)=>
+              {
+                console.error(error.message);
+              });
   }
 
 }

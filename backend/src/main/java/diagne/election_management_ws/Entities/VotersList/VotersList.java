@@ -1,6 +1,5 @@
 package diagne.election_management_ws.Entities.VotersList;
 
-import diagne.election_management_ws.Entities.Arrondissement.Arrondissement;
 import diagne.election_management_ws.Entities.Elector.Elector;
 import diagne.election_management_ws.Entities.VoteOffice.VoteOffice;
 import lombok.AllArgsConstructor;
@@ -17,7 +16,7 @@ import java.util.Set;
 public class VotersList
 {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @Column(name = "voters_list_name")
@@ -29,6 +28,10 @@ public class VotersList
     @Column(name = "voters_list_identification",unique = true)
     private String identification;
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.LAZY)
     private Set<Elector> electors = new HashSet<>();
+
+    @OneToOne(mappedBy = "votersList", fetch = FetchType.LAZY)
+    @JoinColumn(unique = true)
+    private VoteOffice voteOffice;
 }

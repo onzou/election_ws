@@ -12,6 +12,8 @@ export class HeaderComponent implements OnInit
 
   isModalOpened: boolean = false;
   isLoginOpened: boolean = true;
+  user: any = null;
+
   constructor(private auth: AuthService) { }
  
   ngOnInit(): void 
@@ -29,6 +31,10 @@ export class HeaderComponent implements OnInit
       evt = evt || window.event;
       evt.keyCode === 27 ? this.closeModal() : false;
     };
+    if(this.isUserLoggedIn())
+    {
+      this.user = JSON.parse(JSON.stringify(sessionStorage.getItem('user')));
+    }
   }
 
   isUserLoggedIn()
