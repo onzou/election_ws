@@ -15,4 +15,5 @@ public interface ArrondissementRepository extends JpaRepository<Arrondissement, 
     Arrondissement getArrondissementByName(String name);
 
     List<Arrondissement> getArrondissementsByDepartmentId(Long departmentId);
+
 }

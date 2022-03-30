@@ -23,9 +23,10 @@ public class VoteController
     }
 
     @PostMapping()
-    public ResponseEntity<Object> vote(@RequestBody VoteModel voteModel)
+    public ResponseEntity<Object> vote(@RequestParam("elector") Long electorId,
+                                       @RequestParam("candidate") Long candidateId)
     {
-        this.voteService.vote(voteModel.getElector(),voteModel.getCandidate());
+        this.voteService.vote(electorId,candidateId);
         return ResponseEntity.ok(new ResponseMessage("Vote efféctué avec succès!"));
     }
 }

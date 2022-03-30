@@ -23,30 +23,24 @@ export class VotingComponent implements OnInit
   constructor(private votingService: VotingService ) { }
 
   ngOnInit(): void 
-  {
-    console.log(this.hostFile);
-    
+  {    
     this.getAllCandidates();
   }
+  
   getAllCandidates()
   {
     this.votingService.getAllCandidates()
         .subscribe(
+        {
+          next: (data: any)=>
           {
-            next: (data: any)=>
-            {
-              this.candidates = data;
-              console.log("Bonjour candidate!");
-              
-              console.log(this.candidates);
-              
-            },
-            error: (error: HttpErrorResponse)=>
-            {
-              console.error(error.message);
-            }
+            this.candidates = data;
+          },
+          error: (error: HttpErrorResponse)=>
+          {
+            console.error(error.message);
           }
-        )
+        });
   }
 
   openModal(candidat: any)
@@ -54,15 +48,12 @@ export class VotingComponent implements OnInit
     this.chosenCandidate = candidat;
     this.isModalOpened = true;
   }
-  closeModal()
-  {
-    this.isModalOpened = false;
-  }
+
+  closeModal() { this.isModalOpened = false; }
 
   vote()
   {
-    // console.log("Voting..."+this.chosenCandidate.id);
-    this.votingService.vote(Number(sessionStorage.getItem('userId')),this.chosenCandidate.id)
+    this.votingService.vote(Number(sessionStorage.getItem('user')),this.chosenCandidate.id)
         .subscribe(
         {
           next: (data: HttpResponse<any>)=>

@@ -16,13 +16,13 @@ import java.util.Set;
 public class VoteOffice
 {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "name")
     private String name;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne()
     private VotersList votersList;
 
     @Override
@@ -39,6 +39,6 @@ public class VoteOffice
     @JsonIgnore
     private Arrondissement arrondissement;
 
-    @OneToMany(fetch = FetchType.LAZY)
+    @OneToMany(fetch = FetchType.EAGER)
     private Set<Vote> votes = new HashSet<>();
 }

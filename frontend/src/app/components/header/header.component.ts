@@ -27,7 +27,8 @@ export class HeaderComponent implements OnInit
       });
     }
    
-    document.onkeydown = evt => {
+    document.onkeydown = evt => 
+    {
       evt = evt || window.event;
       evt.keyCode === 27 ? this.closeModal() : false;
     };
@@ -41,6 +42,7 @@ export class HeaderComponent implements OnInit
   {
     return this.auth.isLoggedIn();
   }
+
   openModal()
   {
     this.isModalOpened = true;
@@ -66,6 +68,7 @@ export class HeaderComponent implements OnInit
                 sessionStorage.setItem('token',String(token));
                 sessionStorage.setItem('user',String(userId));
                 this.closeModal();
+                window.location.href = "/";
                 
               },(error: HttpErrorResponse)=>
               {

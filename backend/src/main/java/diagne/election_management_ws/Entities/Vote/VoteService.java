@@ -29,17 +29,21 @@ public class VoteService
         this.votersListService = votersListService;
     }
 
-    public void vote(Elector elector, Elector candidate)
+    @Transactional
+    public void vote(Long electorId, Long candidateId)
     {
         //avoir les votes du bureau de vote tel et de tel arrondissement;
-        Optional<VoteOffice> voteOfficeOptional = votersListService.getVoteOfficeByNameAndArrondissement(elector.getVoteOffice(),elector.getArrondissement());
-        if(voteOfficeOptional.isPresent())
+        Elector elector = this.electorService.getElectorById(electorId);
+        Elector candidate = this.electorService.getElectorById(candidateId);
+
+        VoteOffice voteOfficeOptional = votersListService.getVoteOfficeByNameAndArrondissement(elector.getVoteOffice(),elector.getArrondissement());
+        if(voteOfficeOptional != null)
         {
             //vérifier si candidat existe déjà dans les votes.
             Vote voteToSave = new Vote();
             voteToSave.setCandidate(candidate);
             voteToSave.setVoterId(elector.getId());
-            voteToSave.setVoteOffice(voteOfficeOptional.get());
+            voteToSave.setVoteOffice(voteOfficeOptional);
             this.voteRepo.save(voteToSave);
             this.electorService.updateAfterVoting(elector);
         }
