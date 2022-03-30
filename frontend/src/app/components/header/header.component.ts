@@ -13,6 +13,7 @@ export class HeaderComponent implements OnInit
   isModalOpened: boolean = false;
   isLoginOpened: boolean = true;
   user: any = null;
+  hasUserVoted: boolean = false; 
 
   constructor(private auth: AuthService) { }
  
@@ -34,13 +35,29 @@ export class HeaderComponent implements OnInit
     };
     if(this.isUserLoggedIn())
     {
-      this.user = JSON.parse(JSON.stringify(sessionStorage.getItem('user')));
+      this.user = sessionStorage.getItem('user');
+      this.hasUserVoted = this.checkUserVote();
     }
   }
 
   isUserLoggedIn()
   {
     return this.auth.isLoggedIn();
+  }
+
+  private checkUserVote()
+  {
+    let myUser: any;
+    this.auth.getUserById(this.user)
+        .subscribe((data:any) =>
+        {
+          this.auth.reloadUser(Number(this.user));
+          
+          myUser = data;
+
+        });
+    return myUser.hasVoted;
+        
   }
 
   openModal()

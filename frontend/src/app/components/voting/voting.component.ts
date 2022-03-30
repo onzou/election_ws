@@ -1,5 +1,6 @@
 import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { AuthService } from 'src/app/services/auth.service';
 import { VotingService } from 'src/app/services/voting.service';
 import { environment as env } from 'src/environments/environment';
 

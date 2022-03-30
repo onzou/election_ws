@@ -9,10 +9,10 @@
         <li>
           <a href="#visualize" class="visualize">Visualiser</a>
         </li>
-        <li class="box voter" *ngIf="user && !user.hasVoted" routerLink="vote">
+        <li class="box voter" *ngIf="user && hasUserVoted" routerLink="vote">
           <a>Vote</a>
         </li>
-        <li class="box voter" *ngIf="user && user.hasVoted">
+        <li class="box voter" *ngIf="user && !hasUserVoted">
           <a>Vous avez déjà voté</a>
         </li>
         <li class="box login" *ngIf="!user" (click)="openModal()">

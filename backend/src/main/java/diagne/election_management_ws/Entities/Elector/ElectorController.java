@@ -60,4 +60,10 @@ public class ElectorController
         this.electorService.saveAll(electors);
         return ResponseEntity.ok(null);
     }
+
+    @GetMapping(path = "get/{id}")
+    public ResponseEntity<Object> getElectorById(@PathVariable("id") Long electorId)
+    {
+        return ResponseEntity.ok(this.electorService.getElectorById(electorId));
+    }
 }
