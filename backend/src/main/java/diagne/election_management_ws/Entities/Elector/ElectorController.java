@@ -1,5 +1,7 @@
 package diagne.election_management_ws.Entities.Elector;
 
+import diagne.election_management_ws.Entities.Token.TokenService;
+import diagne.election_management_ws.Model.SubscriptionModel;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.net.URI;
@@ -11,10 +13,13 @@ import java.util.List;
 public class ElectorController
 {
     private final ElectorService electorService;
+    private final TokenService tokenService;
 
-    public ElectorController(ElectorService electorService)
+    public ElectorController(ElectorService electorService,
+                             TokenService tokenService)
     {
         this.electorService = electorService;
+        this.tokenService = tokenService;
     }
 
     @PostMapping(path = "login")
@@ -31,11 +36,24 @@ public class ElectorController
                              .body(this.electorService.save(elector));
     }
 
+    @PostMapping(path = "logout")
+    public ResponseEntity<Object> logout(@RequestHeader("Authorization") String token)
+    {
+        this.tokenService.deleteTokenByValue(this.getTokenFromHeader(token));
+        return ResponseEntity.ok("Déconnexion réussie!");
+    }
+
     @PostMapping(path = "modify")
     public ResponseEntity<Object> modify(@RequestBody Elector elector)
     {
         this.electorService.modify(elector);
         return ResponseEntity.ok(null);
+    }
+
+    @PostMapping(path = "subscribe")
+    public ResponseEntity<Object> subscribeUser(@RequestBody SubscriptionModel subscriptionModel)
+    {
+        return ResponseEntity.ok(this.electorService.subscribeUser(subscriptionModel));
     }
 
     @GetMapping(path = "candidate")
@@ -51,7 +69,7 @@ public class ElectorController
                                                  @RequestParam("voteOffice") String voteOfficeName)
     {
         this.electorService.changeVoteArea(elector,regionName,arrondissementName,voteOfficeName);
-        return ResponseEntity.ok("Vote effectué avec succès");
+        return ResponseEntity.ok("Changement de lieu de vote effectué avec succès");
     }
 
     @PostMapping(path = "save")
@@ -66,4 +84,22 @@ public class ElectorController
     {
         return ResponseEntity.ok(this.electorService.getElectorById(electorId));
     }
+
+    @GetMapping(path = "areas")
+    public ResponseEntity<Object> getCirconscriptions()
+    {
+        return ResponseEntity.ok(this.electorService.getAreas());
+    }
+
+    @PostMapping(path = "check-user-subscription")
+    public ResponseEntity<Object> checkUserSubscription(@RequestBody Elector elector)
+    {
+        return ResponseEntity.ok(this.electorService.checkUserSubscription(elector));
+    }
+
+    private String getTokenFromHeader(String token)
+    {
+        return token.substring("Bearer ".length());
+    }
+
 }

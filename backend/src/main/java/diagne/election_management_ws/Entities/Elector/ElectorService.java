@@ -1,28 +1,31 @@
 package diagne.election_management_ws.Entities.Elector;
 
 import diagne.election_management_ws.Entities.File.FileService;
+import diagne.election_management_ws.Entities.Region.Region;
+import diagne.election_management_ws.Entities.Region.RegionService;
 import diagne.election_management_ws.Entities.Role.Role;
 import diagne.election_management_ws.Entities.Role.RoleService;
 import diagne.election_management_ws.Entities.VotersList.VotersList;
 import diagne.election_management_ws.Entities.VotersList.VotersListService;
+import diagne.election_management_ws.Model.SubscriptionModel;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
 import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDate;
 import java.time.Period;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
 @Transactional
+@CrossOrigin
 public class ElectorService implements UserDetailsService
 {
     private final ElectorRepository electorRepository;
@@ -30,12 +33,14 @@ public class ElectorService implements UserDetailsService
     private final FileService fileService;
     private final PasswordEncoder passwordEncoder;
     private final VotersListService votersListService;
+    private final RegionService regionService;
 
     public ElectorService(ElectorRepository electorRepository,
                           RoleService roleService,
                           FileService fileService,
                           PasswordEncoder passwordEncoder,
-                          VotersListService votersListService)
+                          VotersListService votersListService,
+                          RegionService regionService)
     {
         this.electorRepository = electorRepository;
         this.roleService = roleService;
@@ -43,6 +48,7 @@ public class ElectorService implements UserDetailsService
         this.passwordEncoder = passwordEncoder;
         this.votersListService = votersListService;
 
+        this.regionService = regionService;
     }
 
     public Elector getElectorByNumber(String electorNumber)
@@ -107,6 +113,30 @@ public class ElectorService implements UserDetailsService
         return savedElector;
     }
 
+    public Elector subscribeUser(SubscriptionModel subscriptionModel)
+    {
+        Elector elector = this.getElectorByNumber(subscriptionModel.getElectorNumber());
+        if(elector == null)
+        {
+            throw new ElectorException("Electeur inconnu");
+        }
+        Elector savedElector = null;
+        VotersList votersListRetrieved = this.votersListService
+                .getVoters_listByVoteOfficeAndArrondissement(elector.getVoteOffice(),elector.getArrondissement());
+        Set<Elector> electorsOfVotersList = votersListRetrieved.getElectors();
+
+        if(electorsOfVotersList.contains((Elector)elector))
+            throw new ElectorException("Vous vous êtes déjà inscrit");
+
+        elector.setPassword(this.passwordEncoder.encode(subscriptionModel.getPassword()));
+        savedElector = this.electorRepository.save(elector);
+        votersListRetrieved.getElectors().add(savedElector);
+
+        this.votersListService.save(votersListRetrieved);
+        return savedElector;
+
+    }
+
     public void modify(Elector elector)
     {
         Set<Role> roles = new HashSet<>();
@@ -164,7 +194,17 @@ public class ElectorService implements UserDetailsService
         }
     }
 
+    public boolean checkUserSubscription(Elector elector)
+    {
+        VotersList votersList = this.votersListService.getVotersListByElectorId(elector.getId());
+        return votersList != null;
+    }
 
+    public List<Region> getAreas()
+    {
+        return this.regionService.getAllRegions();
+
+    }
     private String getAlphaNumericString(int n)
     {
 

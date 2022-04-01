@@ -19,13 +19,20 @@ export class VotingComponent implements OnInit
   hostFile: string = `${env.api}/file?filename=`;
   candidates: any[] = [];
 
+  user: any;
   chosenCandidate: any = 0;
 
-  constructor(private votingService: VotingService ) { }
+  constructor(private votingService: VotingService,
+              private auth: AuthService ) { }
 
   ngOnInit(): void 
   {    
     this.getAllCandidates();
+    let fromStorage = sessionStorage.getItem('userObject');
+    if(fromStorage)
+      this.user = JSON.parse(fromStorage);
+
+    this.hasAlreadyVoted = this.user.hasVoted;
   }
   
   getAllCandidates()

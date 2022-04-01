@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import java.util.List;
 
 @Repository
-@CrossOrigin
 @RepositoryRestResource(collectionResourceRel = "elector",path = "elector")
+@CrossOrigin
 public interface ElectorRepository extends JpaRepository<Elector, Long>
 {
     Elector getElectorByElectorNumber(String value);

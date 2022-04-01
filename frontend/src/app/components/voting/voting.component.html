@@ -16,7 +16,9 @@
       </div>
       <div class="card-flap flap2">
         <div class="card-actions">
-          <a  class="btn" (click)="openModal(candidat)" style="cursor: pointer;" >Voter</a>
+          <a class="btn" *ngIf="!hasAlreadyVoted" (click)="openModal(candidat)" style="cursor: pointer;" >Voter</a>
+          <a class="btn" *ngIf="hasAlreadyVoted" (click)="openModal(candidat)" style="cursor: pointer;" >Voir</a>
+
         </div>
       </div>
     </div>
@@ -37,7 +39,8 @@
       </div>
       <div class="card-flap flap2">
         <div class="card-actions">
-          <a  class="btn" (click)="openModal(null)" style="cursor: pointer;" >Voter</a>
+          <a  class="btn" *ngIf="!hasAlreadyVoted"  (click)="openModal(null)" style="cursor: pointer;" >Voter</a>
+
         </div>
       </div>
     </div>
@@ -87,7 +90,7 @@
           <p>Voter pour aucun des candidats.</p>
         </div>
         <div class="modal-buttons">
-          <button class="input-button" type="submit" [disabled]="hasAlreadyVoted" (click)="vote()" >Confimer</button>
+          <button class="input-button" type="submit" *ngIf="!hasAlreadyVoted" (click)="vote()" >Confimer</button>
         </div>
       </div>
         <div class="modal-right">

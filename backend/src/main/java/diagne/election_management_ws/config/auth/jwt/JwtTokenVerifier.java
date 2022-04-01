@@ -6,6 +6,7 @@ import diagne.election_management_ws.Entities.Token.TokenService;
 import diagne.election_management_ws.Model.Exceptions.BadAuthenticationException;
 import io.jsonwebtoken.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -53,31 +54,34 @@ public class JwtTokenVerifier extends OncePerRequestFilter
         String token = authorizationHeader.replace(jwtConfig.getTokenPrefix(),"");
         if(isTokenRevoked(token))
         {
-            throw new BadAuthenticationException("invalid token!");
+            httpServletResponse.setStatus(Integer.parseInt(HttpStatus.BAD_REQUEST.name()));
         }
-        try
+        else
         {
-            //use parseClaimsJwt if there is no key signing and user parseClaimsJws otherwise.
-            Jwt<Header, Claims> claimsJws = Jwts.parser()
-                                        .parseClaimsJwt(token);
-            Claims tokenBody = claimsJws.getBody();
-            String username = tokenBody.getSubject();
+            try
+            {
+                //use parseClaimsJwt if there is no key signing and user parseClaimsJws otherwise.
+                Jwt<Header, Claims> claimsJws = Jwts.parser()
+                        .parseClaimsJwt(token);
+                Claims tokenBody = claimsJws.getBody();
+                String username = tokenBody.getSubject();
 
-            List<Map<String, String>> authorities = (List<Map<String, String>>) tokenBody.get("authorities");
+                List<Map<String, String>> authorities = (List<Map<String, String>>) tokenBody.get("authorities");
 
-            Set<SimpleGrantedAuthority> grantedAuthorities = authorities.stream()
-                                            .map(authority -> new SimpleGrantedAuthority(authority.get("authority")))
-                                            .collect(Collectors.toSet());
+                Set<SimpleGrantedAuthority> grantedAuthorities = authorities.stream()
+                        .map(authority -> new SimpleGrantedAuthority(authority.get("authority")))
+                        .collect(Collectors.toSet());
 
-            Authentication authentication = new UsernamePasswordAuthenticationToken(
-                    username,
-                    null,
-                    grantedAuthorities);
+                Authentication authentication = new UsernamePasswordAuthenticationToken(
+                        username,
+                        null,
+                        grantedAuthorities);
 
-            SecurityContextHolder.getContext().setAuthentication(authentication);
-        }catch(JwtException e)
-        {
-            throw new BadAuthenticationException("invalid token!");
+                SecurityContextHolder.getContext().setAuthentication(authentication);
+            }catch(JwtException e)
+            {
+                httpServletResponse.setStatus(Integer.parseInt(HttpStatus.BAD_REQUEST.name()));
+            }
         }
         filterChain.doFilter(httpServletRequest,httpServletResponse);
     }

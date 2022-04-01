@@ -24,7 +24,7 @@ public class Region
     @Column(unique = true)
     private String name;
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.EAGER)
     private Set<Department> departments = new HashSet<>();
 
 }

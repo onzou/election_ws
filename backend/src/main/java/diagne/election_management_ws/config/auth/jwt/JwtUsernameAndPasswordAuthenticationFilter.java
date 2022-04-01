@@ -10,6 +10,7 @@ import diagne.election_management_ws.Model.Exceptions.BadAuthenticationException
 import io.jsonwebtoken.Jwts;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -53,7 +54,7 @@ public class JwtUsernameAndPasswordAuthenticationFilter extends UsernamePassword
     protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response,
                                               AuthenticationException failed) throws IOException, ServletException
     {
-        throw new BadAuthenticationException("Adresse email ou mot de passe incorrect");
+        response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
     }
 
     @Override
